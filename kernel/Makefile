@@ -29,24 +29,46 @@ $(warning "KSU_GIT_VERSION not defined! It is better to make KernelSU-Next a git
 ccflags-y += -DKSU_VERSION=16
 endif
 
+ifndef KSU_EXPECTED_SIZE
+KSU_EXPECTED_SIZE := 0x033b
+endif
+
+ifndef KSU_EXPECTED_HASH
+KSU_EXPECTED_HASH := c371061b19d8c7d7d6133c6a9bafe198fa944e50c1b31c9d8daa8d7f1fc2d2d6
+endif
+
 ifndef KSU_NEXT_EXPECTED_SIZE
 KSU_NEXT_EXPECTED_SIZE := 0x3e6
 endif
-
 ifndef KSU_NEXT_EXPECTED_HASH
 KSU_NEXT_EXPECTED_HASH := 79e590113c4c4c0c222978e413a5faa801666957b1212a328e46c00c69821bf7
+endif
+ifndef KSU_N3X7G3N_EXPECTED_SIZE
+KSU_N3X7G3N_EXPECTED_SIZE := 0x29c
+endif
+
+ifndef KSU_N3X7G3N_EXPECTED_HASH
+KSU_N3X7G3N_EXPECTED_HASH := bfddf83a559355b053187177775c39c639d2d2695163baa77253746dbf18098d
 endif
 
 ifdef KSU_MANAGER_PACKAGE
 ccflags-y += -DKSU_MANAGER_PACKAGE=\"$(KSU_MANAGER_PACKAGE)\"
-$(info -- KernelSU-Next Manager package name: $(KSU_MANAGER_PACKAGE))
+$(info -- KernelSU Manager package name: $(KSU_MANAGER_PACKAGE))
 endif
 
+$(info -- KernelSU Manager signature size: $(KSU_EXPECTED_SIZE))
+$(info -- KernelSU Manager signature hash: $(KSU_EXPECTED_HASH))
 $(info -- KernelSU-Next Manager signature size: $(KSU_NEXT_EXPECTED_SIZE))
 $(info -- KernelSU-Next Manager signature hash: $(KSU_NEXT_EXPECTED_HASH))
+$(info -- KernelSU n3x7g3n Manager signature size: $(KSU_N3X7G3N_EXPECTED_SIZE))
+$(info -- KernelSU n3x7g3n Manager signature hash: $(KSU_N3X7G3N_EXPECTED_HASH))
 
+ccflags-y += -DEXPECTED_SIZE=$(KSU_EXPECTED_SIZE)
+ccflags-y += -DEXPECTED_HASH=\"$(KSU_EXPECTED_HASH)\"
 ccflags-y += -DEXPECTED_NEXT_SIZE=$(KSU_NEXT_EXPECTED_SIZE)
 ccflags-y += -DEXPECTED_NEXT_HASH=\"$(KSU_NEXT_EXPECTED_HASH)\"
+ccflags-y += -DEXPECTED_N3X7G3N_SIZE=$(KSU_N3X7G3N_EXPECTED_SIZE)
+ccflags-y += -DEXPECTED_N3X7G3N_HASH=\"$(KSU_N3X7G3N_EXPECTED_HASH)\"
 
 ccflags-y += -DKSU_UMOUNT
 
