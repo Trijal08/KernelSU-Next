@@ -21,6 +21,12 @@ format:
 check-format:
 	find . \( -name "*.c" -o -name "*.h" \) -print0 | xargs -0 clang-format --dry-run --Werror
 
+# UL, look for read_iter on f_op struct
+ifeq ($(shell grep -q "read_iter" $(srctree)/include/linux/fs.h 2>/dev/null; echo $$?),0)
+$(info -- KernelSU/compat: f_op->read_iter found!)
+ccflags-y += -DKSU_HAS_FOP_READ_ITER
+endif
+
 # UL, look for "ext4_unregister_sysfs" on fs/ext4
 ifeq ($(shell grep -q "^extern void ext4_unregister_sysfs" $(srctree)/fs/ext4/ext4.h 2>/dev/null; echo $$?),0)
 ccflags-y += -DKSU_HAS_MODERN_EXT4

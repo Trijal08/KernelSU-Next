@@ -462,10 +462,12 @@ void ksu_handle_sys_read(unsigned int fd)
 	if (orig_read) {
 		fops_proxy.read = read_proxy;
 	}
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 16, 0) || defined(KSU_HAS_FOP_READ_ITER)
 	orig_read_iter = file->f_op->read_iter;
 	if (orig_read_iter) {
 		fops_proxy.read_iter = read_iter_proxy;
 	}
+#endif
 	// replace the file_operations
 	file->f_op = &fops_proxy;
 
