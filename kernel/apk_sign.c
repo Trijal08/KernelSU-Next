@@ -224,7 +224,8 @@ static __always_inline bool check_v2_signature(char *path,
 
 	kernel_read(fp, &size8, 0x8, &pos);
 	kernel_read(fp, buffer, 0x10, &pos);
-	if (strcmp((char *)buffer, "APK Sig Block 42")) {
+	// !! remove this casting to char just to strcmp
+	if (memcmp(buffer, "APK Sig Block 42", 16)) {
 		goto clean;
 	}
 
