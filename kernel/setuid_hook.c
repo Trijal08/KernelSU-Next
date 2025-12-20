@@ -15,6 +15,9 @@
 #include <linux/uaccess.h>
 #include <linux/uidgid.h>
 #include <linux/version.h>
+#ifdef CONFIG_KSU_SUSFS
+#include <linux/susfs_def.h>
+#endif // #ifdef CONFIG_KSU_SUSFS
 
 #include "allowlist.h"
 #include "setuid_hook.h"
